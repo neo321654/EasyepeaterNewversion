@@ -1,12 +1,16 @@
 package com.spotolcom.easyrepeater.ui.home
 
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -47,7 +51,23 @@ class HomeFragment() : Fragment() {
         })
         val fab = root.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.nav_gallery, null))
-
+        val button_start = root.findViewById<Button>(R.id.button_start)
+        button_start.setOnClickListener{
+            creatNotif(it.context)
+        }
         return root
     }
+
+    fun creatNotif(context: Context){
+
+        var builder = NotificationCompat.Builder(context, "CHANNEL_ID")
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("textTitle")
+            .setContentText("textContent")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(context)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(111, builder.build())
+        }}
 }
