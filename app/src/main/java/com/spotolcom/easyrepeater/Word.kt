@@ -17,4 +17,12 @@ import androidx.room.PrimaryKey
  */
 
 @Entity(tableName = "word_table")
-data class Word(@PrimaryKey @ColumnInfo(name = "word") val word: String)
+data class Word(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int = 0,
+    @ColumnInfo(name = "word") val word: String,
+    @ColumnInfo(name = "translate") val translate: String = "empty",
+    @ColumnInfo(name = "date") val lastName: String = "00:00:00",
+    @ColumnInfo(name = "count") val count: Int = 1,
+    @ColumnInfo(name = "description") val description: String = "description"
+
+)

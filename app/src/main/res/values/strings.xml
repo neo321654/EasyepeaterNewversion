@@ -13,4 +13,7 @@
     <string name="add_word">Добавить слово</string>
     <string name="hint_word">Word...</string>
     <string name="button_save">Save</string>
+    <string name="id">ID</string>
+    <string name="word">Phrase</string>
+    <string name="translate">translate</string>
 </resources>

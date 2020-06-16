@@ -38,7 +38,7 @@ class GalleryFragment : Fragment() {
         homeViewModel =ViewModelProvider(this).get(HomeViewModel::class.java)
         val button = root.findViewById<Button>(R.id.button_save)
         button.setOnClickListener {
-            val word = Word(editWordView.text.toString())
+            val word = Word(word = editWordView.text.toString())
             homeViewModel.insert(word)
             it.findNavController().navigate(R.id.nav_home, null)
         }
