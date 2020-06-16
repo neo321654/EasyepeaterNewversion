@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
     //dankin
+    //my
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
