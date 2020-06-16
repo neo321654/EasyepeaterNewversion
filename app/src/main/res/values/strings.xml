@@ -16,4 +16,6 @@
     <string name="id">ID</string>
     <string name="word">Phrase</string>
     <string name="translate">translate</string>
+    <string name="translat">Translate...</string>
+    <string name="edit_phrase">edit phrase</string>
 </resources>

@@ -4,28 +4,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.spotolcom.easyrepeater.R
+import com.spotolcom.easyrepeater.Word
+import com.spotolcom.easyrepeater.ui.home.HomeViewModel
 
 class SlideshowFragment : Fragment() {
-
-    private lateinit var slideshowViewModel: SlideshowViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        slideshowViewModel =
-                ViewModelProvider(this).get(SlideshowViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        val id: TextView = root.findViewById(R.id.id_text)
+        val edit_word: EditText = root.findViewById(R.id.edit_word)
+        val edit_translate: EditText = root.findViewById(R.id.edit_translate)
+        val save_btn: Button = root.findViewById(R.id.button_save)
+        homeViewModel =ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        id.text = arguments?.getString("id")
+        edit_word.setText( arguments?.getString("word"))
+        edit_translate.setText(arguments?.getString("translate"))
+
+        save_btn.setOnClickListener{
+            homeViewModel.upDate(id.text.toString(),edit_word.text.toString(),edit_translate.text.toString())
+            it.findNavController().navigate(R.id.nav_home, null)
+        }
+
         return root
     }
 }

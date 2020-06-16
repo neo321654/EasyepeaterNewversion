@@ -20,6 +20,7 @@ class GalleryFragment : Fragment() {
 
 //    private lateinit var galleryViewModel: GalleryViewModel
     private lateinit var editWordView: EditText
+    private lateinit var edit_translate: EditText
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
@@ -35,10 +36,11 @@ class GalleryFragment : Fragment() {
 //        })
 
         editWordView = root.findViewById(R.id.edit_word)
+        edit_translate = root.findViewById(R.id.edit_translate)
         homeViewModel =ViewModelProvider(this).get(HomeViewModel::class.java)
         val button = root.findViewById<Button>(R.id.button_save)
         button.setOnClickListener {
-            val word = Word(word = editWordView.text.toString())
+            val word = Word(word = editWordView.text.toString(),translate = edit_translate.text.toString())
             homeViewModel.insert(word)
             it.findNavController().navigate(R.id.nav_home, null)
         }

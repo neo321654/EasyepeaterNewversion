@@ -35,4 +35,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun insert(word: Word) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(word)
     }
+    fun upDate(id:String,word:String,traslate:String) = viewModelScope.launch(Dispatchers.IO) {
+        repository.upDate(id,word,traslate)
+    }
 }

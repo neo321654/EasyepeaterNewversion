@@ -20,6 +20,9 @@ interface WordDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(word: Word)
 
+    @Query("UPDATE word_table SET word = :word,translate = :translate WHERE id = :id")
+    fun update(id:String, word: String,translate:String )
+
     @Query("DELETE FROM word_table")
     fun deleteAll()
 }
