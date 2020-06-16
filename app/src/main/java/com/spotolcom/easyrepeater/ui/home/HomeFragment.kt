@@ -10,8 +10,10 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.spotolcom.easyrepeater.R
 import com.spotolcom.easyrepeater.WordListAdapter
 
@@ -39,7 +41,12 @@ class HomeFragment() : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(root.context)
 
-
+        homeViewModel.allWords.observe(viewLifecycleOwner, Observer { words ->
+            // Update the cached copy of the words in the adapter.
+            words?.let { adapter.setWords(it) }
+        })
+        val fab = root.findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.nav_gallery, null))
 
         return root
     }

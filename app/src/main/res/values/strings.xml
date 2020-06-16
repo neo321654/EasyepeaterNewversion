@@ -11,4 +11,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="add_word">Добавить слово</string>
+    <string name="hint_word">Word...</string>
+    <string name="button_save">Save</string>
 </resources>
