@@ -1,6 +1,5 @@
 package com.spotolcom.easyrepeater.ui.home
 
-import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
@@ -51,7 +49,8 @@ class HomeFragment() : Fragment() {
         })
         val fab = root.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.nav_gallery, null))
-        val button_start = root.findViewById<Button>(R.id.button_start)
+        val button_start = root.findViewById<Button>(R.id.start_btn)
+        val button_stop = root.findViewById<Button>(R.id.stop_btn)
         button_start.setOnClickListener{
             creatNotif(it.context)
         }

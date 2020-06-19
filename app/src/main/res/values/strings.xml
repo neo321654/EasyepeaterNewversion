@@ -18,4 +18,6 @@
     <string name="translate">translate</string>
     <string name="translat">Translate...</string>
     <string name="edit_phrase">edit phrase</string>
+    <string name="stop">stop</string>
+    <string name="start">start</string>
 </resources>
