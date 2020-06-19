@@ -30,7 +30,7 @@ class HomeFragment() : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-
+//
 //        wordViewModel = ViewModelProvider(this).get(WordViewModel::class.java)
 
         homeViewModel =ViewModelProvider(this).get(HomeViewModel::class.java)
