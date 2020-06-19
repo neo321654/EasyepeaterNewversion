@@ -51,7 +51,7 @@ class WordListAdapter internal constructor(
 
     internal fun setWords(words: List<Word>) {
         this.words = words
-        Log.d("mytag", "35;setWords: $words")
+//        Log.d("mytag", "35;setWords: $words")
         notifyDataSetChanged()
     }
 

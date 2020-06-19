@@ -16,6 +16,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.spotolcom.easyrepeater.ForegroundService
 import com.spotolcom.easyrepeater.R
 import com.spotolcom.easyrepeater.WordListAdapter
 
@@ -52,21 +53,16 @@ class HomeFragment() : Fragment() {
         val button_start = root.findViewById<Button>(R.id.start_btn)
         val button_stop = root.findViewById<Button>(R.id.stop_btn)
         button_start.setOnClickListener{
-            creatNotif(it.context)
+//            creatNotif(it.context)
+            ForegroundService.startService(root.context, "Foreground Service is running...")
+
+        }
+        button_stop.setOnClickListener{
+            ForegroundService.stopService(root.context)
+
         }
         return root
     }
 
-    fun creatNotif(context: Context){
 
-        var builder = NotificationCompat.Builder(context, "CHANNEL_ID")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("textTitle")
-            .setContentText("textContent")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        with(NotificationManagerCompat.from(context)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(111, builder.build())
-        }}
 }
