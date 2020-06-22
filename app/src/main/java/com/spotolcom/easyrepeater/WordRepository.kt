@@ -20,6 +20,11 @@ class WordRepository(private val wordDao: WordDao) {
     }
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    suspend fun getRandWords() {
+        wordDao.getRandWords()
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
     suspend fun upDate(id:String,word:String,traslate:String) {
         wordDao.update(id,word,traslate)
     }
