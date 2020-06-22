@@ -7,6 +7,7 @@ import android.content.SharedPreferences.Editor
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -39,8 +40,10 @@ class ForegroundService : Service() {
         //do heavy work on a background thread
         var act = intent?.action
         when (act) {
-            "ACTION_PLAY" -> startTraining()
-            "ACTION_STOP" -> stopTraining()
+            "ACTION_STOP" -> {startTraining()
+            Toast.makeText(this,"222",Toast.LENGTH_LONG).show()
+            }
+//            "ACTION_STOP" -> stopTraining()
             else -> {
 
                 val input = intent?.getStringExtra("inputExtra")
@@ -53,7 +56,7 @@ class ForegroundService : Service() {
                 // Add Play button intent in notification.
                 val playIntent = Intent(this, ForegroundService::class.java)
                 playIntent.action = "ACTION_PLAY"
-                val pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0)
+                val pendingPlayIntent = PendingIntent.getService(this, 12221, playIntent, 0)
                 val playAction =
                     NotificationCompat.Action(
                         android.R.drawable.ic_media_play,
@@ -63,7 +66,7 @@ class ForegroundService : Service() {
 
                 val playIntent1 = Intent(this, ForegroundService::class.java)
                 playIntent1.action = "ACTION_STOP"
-                val pendingPlayIntent1 = PendingIntent.getService(this, 0, playIntent1, 0)
+                val pendingPlayIntent1 = PendingIntent.getService(this, 11122, playIntent1, 0)
                 val playAction1 =
                     NotificationCompat.Action(
                         android.R.drawable.ic_media_pause,
@@ -91,6 +94,7 @@ class ForegroundService : Service() {
 
 
     private fun startTraining() {
+        Log.d("mytag", "95;startTraining: nachalo")
         runBlocking {
              var wordsToAlarm: List<Word>? =null
             val job = launch(this.coroutineContext) { //(2)
@@ -106,6 +110,7 @@ class ForegroundService : Service() {
 
 
         }
+        Log.d("mytag", "111;startTraining: end")
     }
 
       private suspend fun getListFromBase(): List<Word> {
@@ -118,9 +123,9 @@ class ForegroundService : Service() {
 //         Log.d("mytag", "94;startTraining: $words")
          return words
      }
-      fun addAlarms(listData:List<Word> ) {
-        val list_data = mutableListOf("one", "two", "three", "four")
-
+      fun addAlarms(list_data:List<Word> ) {
+//        val list_data = mutableListOf("one", "two", "three", "four")
+          Log.d("mytag", "126;addAlarms: vnytri $list_data ")
         val am: AlarmManager
         am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val time2 = 1L//число минут между повторами
@@ -131,7 +136,7 @@ class ForegroundService : Service() {
         if (count > list_data.size) count = list_data.size
 
         for (x in 0 until count) {
-            val phrase: String = list_data[x]
+            val phrase: String = list_data[x].word + " = " + list_data[x].translate
 
             val phraseIntent = Intent(this, ForegroundService::class.java)
             phraseIntent.putExtra("prase", phrase)
@@ -151,6 +156,7 @@ class ForegroundService : Service() {
     //                        }
             time = time + time1
         }
+          Toast.makeText(this,"Запустили алармы",Toast.LENGTH_LONG).show()
     }
 
     private fun stopTraining() {
