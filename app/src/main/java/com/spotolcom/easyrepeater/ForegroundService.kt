@@ -133,7 +133,7 @@ class ForegroundService : Service() {
             val phraseIntent = Intent(this, ForegroundService::class.java)
             phraseIntent.putExtra("prase", phrase)
             phraseIntent.action = "ACTION_PHRASE"
-            val pendingPhraseIntent = PendingIntent.getService(this, x, phraseIntent, 0)
+            val pendingPhraseIntent = PendingIntent.getBroadcast(this, x, phraseIntent, 0)
 
     //            var pIntent1: PendingIntent?
     //
@@ -156,15 +156,18 @@ class ForegroundService : Service() {
         val am1 = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         for (i in 0 until 4) {
             var intent_prase_band1: Intent
-            var pIntent_main: PendingIntent?
+
+
+
             intent_prase_band1 = Intent(this, ForegroundService::class.java)
 //            pIntent_main = PendingIntent.getBroadcast(this, i,  intent_prase_band1,PendingIntent.FLAG_NO_CREATE)
 
-            val pendingPhraseIntent = PendingIntent.getService(this, i, intent_prase_band1, PendingIntent.FLAG_NO_CREATE)
+            intent_prase_band1.action = "ACTION_PHRASE"
+            val pendingPhraseIntent = PendingIntent.getBroadcast(this, i, intent_prase_band1, PendingIntent.FLAG_UPDATE_CURRENT)
             Log.d("mytag", "164;stopTraining: итерация ")
             if (pendingPhraseIntent != null) {
                 am1.cancel(pendingPhraseIntent)
-                pendingPhraseIntent.cancel()
+               // pendingPhraseIntent.cancel()
                 Log.d("mytag", "168;stopTraining: отменил один")
             }
         }
