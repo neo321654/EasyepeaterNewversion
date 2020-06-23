@@ -3,7 +3,6 @@ package com.spotolcom.easyrepeater
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences.Editor
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -11,16 +10,9 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.room.Room
-import com.spotolcom.easyrepeater.ui.home.HomeFragment
-import com.spotolcom.easyrepeater.ui.home.HomeViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.*
 
 class ForegroundService : Service() {
 
@@ -40,10 +32,13 @@ class ForegroundService : Service() {
         //do heavy work on a background thread
         var act = intent?.action
         when (act) {
-            "ACTION_STOP" -> {startTraining()
-            Toast.makeText(this,"222",Toast.LENGTH_LONG).show()
-            }
-//            "ACTION_STOP" -> stopTraining()
+            "ACTION_STOP" -> stopTraining()
+            "Play_act" -> {startTraining()}
+            "ACTION_PHRASE" -> {
+                   val phr = intent?.getStringExtra("prase")
+                    creatNotif(this,phr)
+                }
+
             else -> {
 
                 val input = intent?.getStringExtra("inputExtra")
@@ -55,7 +50,7 @@ class ForegroundService : Service() {
                 )
                 // Add Play button intent in notification.
                 val playIntent = Intent(this, ForegroundService::class.java)
-                playIntent.action = "ACTION_PLAY"
+                playIntent.action = "Play_act"
                 val pendingPlayIntent = PendingIntent.getService(this, 12221, playIntent, 0)
                 val playAction =
                     NotificationCompat.Action(
@@ -89,9 +84,6 @@ class ForegroundService : Service() {
         }
         return START_NOT_STICKY
     }
-
-
-
 
     private fun startTraining() {
         Log.d("mytag", "95;startTraining: nachalo")
@@ -165,7 +157,7 @@ class ForegroundService : Service() {
         for (i in 0 until 30) {
             var intent_prase_band1: Intent
             var pIntent_main: PendingIntent?
-            intent_prase_band1 = Intent("com.uthink.ring.ACTION_INCOMING_RINGING")
+            intent_prase_band1 = Intent(this, ForegroundService::class.java)
             pIntent_main = PendingIntent.getBroadcast(this, i,  intent_prase_band1,PendingIntent.FLAG_NO_CREATE
             )
             if (pIntent_main != null) {
@@ -187,7 +179,7 @@ class ForegroundService : Service() {
             manager!!.createNotificationChannel(serviceChannel)
         }
     }
-    fun creatNotif(context: Context,phrase:String){
+    fun creatNotif(context: Context, phrase: String?){
 
         var builder = NotificationCompat.Builder(context, "CHANNEL_ID")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
