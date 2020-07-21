@@ -20,4 +20,5 @@
     <string name="edit_phrase">edit phrase</string>
     <string name="stop">stop</string>
     <string name="start">start</string>
+    <string name="webview">webview</string>
 </resources>

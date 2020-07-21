@@ -22,4 +22,9 @@
         android:name="com.spotolcom.easyrepeater.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/webview"
+        android:name="com.spotolcom.easyrepeater.ui.webview.webview"
+        android:label="webview_fragment"
+        tools:layout="@layout/webview_fragment" />
 </navigation>
