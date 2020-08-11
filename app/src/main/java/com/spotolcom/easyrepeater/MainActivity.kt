@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     //dankin
     //my
     //test
+    //test2
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {

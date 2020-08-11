@@ -56,6 +56,7 @@ class webview : Fragment() {
                 return true
             }
         }
+
         webView.loadUrl("https://www.avito.ru/")
 
 
