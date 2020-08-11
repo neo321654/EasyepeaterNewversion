@@ -19,12 +19,27 @@ android {
 
 //        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        // Creates a signing configuration called "release".
+        debug {
+            // Specifies the path to your keystore file.
+         //   storeFile false
+            // Specifies the password for your keystore.
+//            storePassword "password"
+//            // Specifies the identifying name for your key.
+//            keyAlias "my-alias"
+//            // Specifies the password for your key.
+//            keyPassword "password"
+//            v1SigningEnabled false
+//            v2SigningEnabled false
+        }
+    }
     buildTypes {
         debug {
-           // signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
             ////
-            applicationIdSuffix ".debug"
-            debuggable true
+//            applicationIdSuffix ".debug"
+//            debuggable true
         }
     }
 
