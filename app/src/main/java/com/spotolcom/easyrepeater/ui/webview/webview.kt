@@ -52,7 +52,9 @@ class webview : Fragment() {
 
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                view?.loadUrl(url)
+                if (url != null) {
+                    view?.loadUrl(url)
+                }
                 return true
             }
         }
