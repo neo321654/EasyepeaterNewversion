@@ -20,6 +20,7 @@ import androidx.core.app.NotificationManagerCompat
 class MainActivity : AppCompatActivity() {
     //dankin
     //my
+    //test
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
