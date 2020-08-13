@@ -27,4 +27,8 @@
         android:name="com.spotolcom.easyrepeater.ui.webview.webview"
         android:label="webview_fragment"
         tools:layout="@layout/webview_fragment" />
+    <fragment
+        android:id="@+id/mySettingsFragment"
+        android:name="com.spotolcom.easyrepeater.MySettingsFragment"
+        android:label="MySettingsFragment" />
 </navigation>
