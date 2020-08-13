@@ -27,7 +27,7 @@ android {
             keyAlias var
             keyPassword 'danilka2010'
         }
-///
+///nnb
         // Creates a signing configuration called "release".
     }
     buildTypes {
