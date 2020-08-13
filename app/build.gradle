@@ -15,23 +15,24 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+//        signingConfig signingConfigs.my_key
 
 
 //        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
         my_key {
-            storeFile file('qq')
-            storePassword 'qq'
-            keyAlias 'qq'
-            keyPassword 'qq'
+            storeFile file('C:\\Users\\neo32\\android-studio\\jre\\jre\\bin\\my_first_key_12')
+            storePassword 'danilka2010'
+            keyAlias var
+            keyPassword 'danilka2010'
         }
 
         // Creates a signing configuration called "release".
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.my_key
             ////
 //            applicationIdSuffix ".debug"
 //            debuggable true
