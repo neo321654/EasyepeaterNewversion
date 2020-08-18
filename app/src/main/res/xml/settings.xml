@@ -21,5 +21,17 @@
             app:title="Send feedback"/>
 
     </PreferenceCategory>
+    <PreferenceCategory
+        app:key="time_loop"
+        app:title="Интервал повторений">
+
+        <EditTextPreference
+            app:key="time_repeat"
+            app:title="Интервал повторений"
+            app:summary="Устанавливает время через которое появиться фраза"
+            app:defaultValue="20"
+            app:dialogTitle="Введите колличество минут (от 15 до )" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
