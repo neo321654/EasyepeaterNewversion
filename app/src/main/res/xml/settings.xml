@@ -6,8 +6,8 @@
         app:title="Notifications">
 
         <SwitchPreferenceCompat
-            app:key="notifications"
-            app:title="Enable message notifications"/>
+            app:key="oldBandMaintain"
+            app:title="@string/oldBandMaintain"/>
 
     </PreferenceCategory>
 

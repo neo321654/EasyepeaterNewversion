@@ -21,4 +21,5 @@
     <string name="stop">stop</string>
     <string name="start">start</string>
     <string name="webview">webview</string>
+    <string name="oldBandMaintain">Поддержка старых часов</string>
 </resources>

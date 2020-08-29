@@ -33,11 +33,13 @@ class ForegroundService : Service() {
         var act = intent?.action
         when (act) {
             "ACTION_STOP" -> stopTraining()
-            "Play_act" -> {startTraining()}
+            "Play_act" -> {
+                startTraining()
+            }
             "ACTION_PHRASE" -> {
-                   val phr = intent?.getStringExtra("prase")
-                    creatNotif(this,phr)
-                }
+                val phr = intent?.getStringExtra("prase")
+                creatNotif(this, phr)
+            }
 
             else -> {
 
@@ -115,11 +117,14 @@ class ForegroundService : Service() {
 //         Log.d("mytag", "94;startTraining: $words")
          return words
      }
-      fun addAlarms(list_data:List<Word> ) {
+      fun addAlarms(list_data: List<Word>) {
 //        val list_data = mutableListOf("one", "two", "three", "four")
           Log.d("mytag", "126;addAlarms: vnytri $list_data ")
-        val am: AlarmManager
-        am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val am: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+      //Здесь надо брать минуты из шаред преференсес
+
         val time2 = 1L//число минут между повторами
         var count = 3//число повторов
         val time1: Long = 1000 * 60 * time2
@@ -135,6 +140,17 @@ class ForegroundService : Service() {
             phraseIntent.action = "ACTION_PHRASE"
             val pendingPhraseIntent = PendingIntent.getBroadcast(this, x, phraseIntent, 0)
 
+                //здесь сделать проверку в настройках поддерживать ли старый банд
+            if(true){
+                var intent_prase_band: Intent
+
+                intent_prase_band = Intent("com.uthink.ring.ACTION_INCOMING_RINGING")
+                intent_prase_band.putExtra("incoming_number",phrase)
+                val pendingPhraseIntentOld = PendingIntent.getBroadcast(this, x+700, intent_prase_band, 0)
+                am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntentOld
+            }
+
+
     //            var pIntent1: PendingIntent?
     //
     //            pIntent1 = PendingIntent.getBroadcast(this, x, pendingPhraseIntent, 0)
@@ -146,9 +162,9 @@ class ForegroundService : Service() {
     //                            Toast.makeText(this, "count = x", Toast.LENGTH_SHORT).show();
     //                            stopForegroundService();
     //                        }
-            time = time + time1
+            time += time1
         }
-          Toast.makeText(this,"Запустили алармы",Toast.LENGTH_LONG).show()
+          Toast.makeText(this, "Запустили алармы", Toast.LENGTH_LONG).show()
     }
 
     private fun stopTraining() {
@@ -163,7 +179,12 @@ class ForegroundService : Service() {
 //            pIntent_main = PendingIntent.getBroadcast(this, i,  intent_prase_band1,PendingIntent.FLAG_NO_CREATE)
 
             intent_prase_band1.action = "ACTION_PHRASE"
-            val pendingPhraseIntent = PendingIntent.getBroadcast(this, i, intent_prase_band1, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingPhraseIntent = PendingIntent.getBroadcast(
+                this,
+                i,
+                intent_prase_band1,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
             Log.d("mytag", "164;stopTraining: итерация ")
             if (pendingPhraseIntent != null) {
                 am1.cancel(pendingPhraseIntent)
@@ -172,7 +193,7 @@ class ForegroundService : Service() {
             }
         }
         stopSelf();
-        Toast.makeText(this,"Останавилваем алармы",Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Останавилваем алармы", Toast.LENGTH_LONG).show()
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -180,8 +201,10 @@ class ForegroundService : Service() {
     }
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val serviceChannel = NotificationChannel(CHANNEL_ID, "Foreground Service Channel",
-                NotificationManager.IMPORTANCE_DEFAULT)
+            val serviceChannel = NotificationChannel(
+                CHANNEL_ID, "Foreground Service Channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
             val manager = getSystemService(NotificationManager::class.java)
             manager!!.createNotificationChannel(serviceChannel)
         }
