@@ -1,5 +1,6 @@
 package com.spotolcom.easyrepeater
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -56,6 +57,10 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.mySettingsFragment)
             true
         }
+        R.id.testNotif -> {
+
+            true
+        }
         else -> {
             // If we got here, the user's action was not recognized.
             // Invoke the superclass to handle it.
@@ -67,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 
 
 }

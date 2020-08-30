@@ -32,13 +32,19 @@ class ForegroundService : Service() {
         //do heavy work on a background thread
         var act = intent?.action
         when (act) {
-            "ACTION_STOP" -> stopTraining()
+            "ACTION_STOP" -> {
+                stopTraining()
+             //   creatNotif(this, "llll")
+            }
             "Play_act" -> {
                 startTraining()
             }
             "ACTION_PHRASE" -> {
+
+                Log.d("mytag", "43;onStartCommand: ACTION_PHRASE")
                 val phr = intent?.getStringExtra("prase")
                 creatNotif(this, phr)
+
             }
 
             else -> {
@@ -100,9 +106,6 @@ class ForegroundService : Service() {
             Log.d("mytag", "104;startTraining: $wordsToAlarm")
             wordsToAlarm?.let { addAlarms(it) }
 
-
-
-
         }
         Log.d("mytag", "111;startTraining: end")
     }
@@ -135,27 +138,30 @@ class ForegroundService : Service() {
         for (x in 0 until count) {
             val phrase: String = list_data[x].word + " = " + list_data[x].translate
 
-            val phraseIntent = Intent(this, ForegroundService::class.java)
+//            var phraseIntent = Intent(this, ForegroundService::class.java)
+            var phraseIntent = Intent("com.spotolcom.easyrepeater.ForeGroundService")
             phraseIntent.putExtra("prase", phrase)
             phraseIntent.action = "ACTION_PHRASE"
-            val pendingPhraseIntent = PendingIntent.getBroadcast(this, x, phraseIntent, 0)
+            //startService(phraseIntent)
+                //  phraseIntent.action = "ACTION_STOP"
+            var pendingPhraseIntent = PendingIntent.getBroadcast(this, x, phraseIntent, 0)
+            am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntent
 
                 //здесь сделать проверку в настройках поддерживать ли старый банд
-            if(true){
-                var intent_prase_band: Intent
-
-                intent_prase_band = Intent("com.uthink.ring.ACTION_INCOMING_RINGING")
-                intent_prase_band.putExtra("incoming_number",phrase)
-                val pendingPhraseIntentOld = PendingIntent.getBroadcast(this, x+700, intent_prase_band, 0)
-                am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntentOld
-            }
+//            if(true){
+//
+//                var intent_prase_band: Intent = Intent("com.uthink.ring.ACTION_INCOMING_RINGING")
+//                intent_prase_band.putExtra("incoming_number",phrase)
+//                val pendingPhraseIntentOld = PendingIntent.getBroadcast(this, x+700, intent_prase_band, 0)
+//                am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntentOld
+//            }
 
 
     //            var pIntent1: PendingIntent?
     //
     //            pIntent1 = PendingIntent.getBroadcast(this, x, pendingPhraseIntent, 0)
 
-            am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntent
+
 
 
     //                        if(x == count){
@@ -170,15 +176,13 @@ class ForegroundService : Service() {
     private fun stopTraining() {
 
         val am1 = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+     //здесь надо ввести колличество установленных алармов
         for (i in 0 until 4) {
-            var intent_prase_band1: Intent
 
-
-
-            intent_prase_band1 = Intent(this, ForegroundService::class.java)
-//            pIntent_main = PendingIntent.getBroadcast(this, i,  intent_prase_band1,PendingIntent.FLAG_NO_CREATE)
-
+            var intent_prase_band1 = Intent(this, ForegroundService::class.java)
             intent_prase_band1.action = "ACTION_PHRASE"
+
             val pendingPhraseIntent = PendingIntent.getBroadcast(
                 this,
                 i,
@@ -209,7 +213,7 @@ class ForegroundService : Service() {
             manager!!.createNotificationChannel(serviceChannel)
         }
     }
-    fun creatNotif(context: Context, phrase: String?){
+     private fun creatNotif(context: Context, phrase: String?){
 
         var builder = NotificationCompat.Builder(context, "CHANNEL_ID")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -221,4 +225,5 @@ class ForegroundService : Service() {
             // notificationId is a unique int for each notification that you must define
             notify(111, builder.build())
         }}
+
 }
