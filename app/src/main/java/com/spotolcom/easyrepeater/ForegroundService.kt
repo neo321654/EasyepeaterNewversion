@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.preference.EditTextPreference
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -128,14 +130,23 @@ class ForegroundService : Service() {
 
       //Здесь надо брать минуты из шаред преференсес
 
-        val time2 = 1L//число минут между повторами
-        var count = 3//число повторов
-        val time1: Long = 1000 * 60 * time2
+    //    val time2 = 1L//число минут между повторами
+          val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */)
+          val timeString = sharedPreferences.getString("time_repeat", "15")
+
+          val countString = sharedPreferences.getString("countLoop", "55")
+
+
+        val time2 = timeString?.toLong()//число минут между повторами
+        var count = countString?.toInt()//число повторов
+        val time1: Long = 1000 * 60 * time2!!
         var time = 1000 * 60.toLong()
 
-        if (count > list_data.size) count = list_data.size
+          if (count != null) {
+              if (count > list_data.size) count = list_data.size
+          }
 
-        for (x in 0 until count) {
+        for (x in 0 until count!!) {
             val phrase: String = list_data[x].word + " = " + list_data[x].translate
 
 //            var phraseIntent = Intent(this, ForegroundService::class.java)

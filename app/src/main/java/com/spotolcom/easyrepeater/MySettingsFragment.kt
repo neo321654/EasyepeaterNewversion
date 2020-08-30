@@ -15,14 +15,24 @@ class MySettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
         val timeRepeat: EditTextPreference? = findPreference("time_repeat")
+        val countRepeat: EditTextPreference? = findPreference("countLoop")
 
         timeRepeat?.summaryProvider =
             Preference.SummaryProvider<EditTextPreference> { preference ->
                 val text = preference.text
                 if (TextUtils.isEmpty(text)) {
-                    "Время не установлено"
+                    getString(R.string.time_repeat_code_not)
                 } else {
-                    "Интервал повторений равен: $text"
+                    getString(R.string.time_repeat_code) + " $text"
+                }
+            }
+        countRepeat?.summaryProvider =
+            Preference.SummaryProvider<EditTextPreference> { preference ->
+                val text = preference.text
+                if (TextUtils.isEmpty(text)) {
+                    getString(R.string.count_repeat_code_not)
+                } else {
+                    getString(R.string.count_repeat_code) +" $text"
                 }
             }
         timeRepeat?.setOnBindEditTextListener {

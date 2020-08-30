@@ -23,4 +23,14 @@
     <string name="webview">webview</string>
     <string name="oldBandMaintain">Поддержка старых часов</string>
     <string name="testNotif">testNotif</string>
+    <string name="countLoop">Количество повторов</string>
+    <string name="time_repeat">Интервал повторений</string>
+    <string name="descriptionTimeRepeat">Устанавливает время через которое появиться фраза</string>
+    <string name="descriptionTimeRepeatTitle">Введите колличество минут (от 15 до )</string>
+    <string name="countLoopDescr">Устанавливает количество фраз</string>
+    <string name="countLoopDescrTitle">Введите количество фраз для изучения</string>
+    <string name="time_repeat_code">Интервал повторений равен:</string>
+    <string name="time_repeat_code_not">Время не установлено</string>
+    <string name="count_repeat_code_not">Количество не установлено</string>
+    <string name="count_repeat_code">"Количество повторений равно: "</string>
 </resources>

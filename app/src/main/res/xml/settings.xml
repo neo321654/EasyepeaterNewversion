@@ -1,6 +1,29 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        app:key="time_loop"
+        app:title="@string/time_repeat">
 
+        <EditTextPreference
+            app:key="time_repeat"
+            app:title="@string/time_repeat"
+            app:summary="@string/descriptionTimeRepeat"
+            app:defaultValue="20"
+            app:dialogTitle="@string/descriptionTimeRepeatTitle" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:key="countLoopCategory"
+        app:title="@string/countLoop">
+
+        <EditTextPreference
+            app:key="countLoop"
+            app:title="@string/countLoop"
+            app:summary="@string/countLoopDescr"
+            app:defaultValue="40"
+            app:dialogTitle="@string/countLoopDescrTitle" />
+
+    </PreferenceCategory>
     <PreferenceCategory
         app:key="notifications_category"
         app:title="Notifications">
@@ -8,29 +31,6 @@
         <SwitchPreferenceCompat
             app:key="oldBandMaintain"
             app:title="@string/oldBandMaintain"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:key="help_category"
-        app:title="Help">
-
-        <Preference
-            app:key="feedback"
-            app:summary="Report technical issues or suggest new features"
-            app:title="Send feedback"/>
-
-    </PreferenceCategory>
-    <PreferenceCategory
-        app:key="time_loop"
-        app:title="Интервал повторений">
-
-        <EditTextPreference
-            app:key="time_repeat"
-            app:title="Интервал повторений"
-            app:summary="Устанавливает время через которое появиться фраза"
-            app:defaultValue="20"
-            app:dialogTitle="Введите колличество минут (от 15 до )" />
 
     </PreferenceCategory>
 
