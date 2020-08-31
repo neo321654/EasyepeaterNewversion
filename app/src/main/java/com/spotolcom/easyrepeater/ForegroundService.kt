@@ -150,7 +150,8 @@ class ForegroundService : Service() {
             val phrase: String = list_data[x].word + " = " + list_data[x].translate
 
 //            var phraseIntent = Intent(this, ForegroundService::class.java)
-            var phraseIntent = Intent("com.spotolcom.easyrepeater.ForeGroundService")
+//            var phraseIntent = Intent("com.spotolcom.easyrepeater.ForeGroundService")
+            var phraseIntent = Intent("com.spotolcom.easyrepeater.MyReceiver")
             phraseIntent.putExtra("prase", phrase)
             phraseIntent.action = "ACTION_PHRASE"
             //startService(phraseIntent)
