@@ -14,7 +14,10 @@
         <receiver
             android:name=".MyReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" > <intent-filter>
+            <action android:name="com.spotolcom.easyrepeater.MyReceiver" >
+            </action>
+        </intent-filter></receiver>
 
         <service
             android:name=".ForegroundService"

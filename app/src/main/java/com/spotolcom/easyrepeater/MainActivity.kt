@@ -1,7 +1,9 @@
 package com.spotolcom.easyrepeater
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -59,6 +61,20 @@ class MainActivity : AppCompatActivity() {
         }
         R.id.testNotif -> {
 
+//            var phraseIntent = Intent("com.spotolcom.easyrepeater.MyReceiver")
+//            phraseIntent.putExtra("prase", "phrase")
+//            phraseIntent.action = "ACTION_PHRASE"
+//
+//            sendBroadcast(phraseIntent)
+//            Log.d("mytag", "68;onOptionsItemSelected: ")
+//            Intent().also { intent ->
+//                intent.action = "com.spotolcom.easyrepeater.MyReceiver"
+//                intent.putExtra("data", "Notice me senpai!")
+//                sendBroadcast(intent)
+//            }
+
+
+            //  creatNotif(this,"notif")
             true
         }
         else -> {
@@ -73,6 +89,17 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    private fun creatNotif(context: Context, phrase: String?){
 
+        var builder = NotificationCompat.Builder(context, "CHANNEL_ID")
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("textTitle")
+            .setContentText(phrase)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(context)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(111, builder.build())
+        }}
 
 }

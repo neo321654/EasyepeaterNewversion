@@ -153,8 +153,14 @@ class ForegroundService : Service() {
 //            var phraseIntent = Intent("com.spotolcom.easyrepeater.ForeGroundService")
             var phraseIntent = Intent("com.spotolcom.easyrepeater.MyReceiver")
             phraseIntent.putExtra("prase", phrase)
-            phraseIntent.action = "ACTION_PHRASE"
+         //   phraseIntent.action = "ACTION_PHRASE"
             //startService(phraseIntent)
+
+            Intent().also { intent ->
+                intent.action = "com.spotolcom.easyrepeater.MyReceiver"
+                intent.putExtra("data", "Notice me senpai!")
+                sendBroadcast(intent)
+            }
                 //  phraseIntent.action = "ACTION_STOP"
             var pendingPhraseIntent = PendingIntent.getBroadcast(this, x, phraseIntent, 0)
             am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntent
@@ -189,23 +195,29 @@ class ForegroundService : Service() {
 
         val am1 = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */)
+
+        val countString = sharedPreferences.getString("countLoop", "35")
+
      //здесь надо ввести колличество установленных алармов
-        for (i in 0 until 4) {
+        if (countString != null) {
+            for (i in 0 until countString.toInt()) {
 
-            var intent_prase_band1 = Intent(this, ForegroundService::class.java)
-            intent_prase_band1.action = "ACTION_PHRASE"
+                var intent_prase_band1 = Intent(this, ForegroundService::class.java)
+                intent_prase_band1.action = "ACTION_PHRASE"
 
-            val pendingPhraseIntent = PendingIntent.getBroadcast(
-                this,
-                i,
-                intent_prase_band1,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-            Log.d("mytag", "164;stopTraining: итерация ")
-            if (pendingPhraseIntent != null) {
-                am1.cancel(pendingPhraseIntent)
-               // pendingPhraseIntent.cancel()
-                Log.d("mytag", "168;stopTraining: отменил один")
+                val pendingPhraseIntent = PendingIntent.getBroadcast(
+                    this,
+                    i,
+                    intent_prase_band1,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+                Log.d("mytag", "164;stopTraining: итерация ")
+                if (pendingPhraseIntent != null) {
+                    am1.cancel(pendingPhraseIntent)
+                    // pendingPhraseIntent.cancel()
+                    Log.d("mytag", "168;stopTraining: отменил один")
+                }
             }
         }
         stopSelf();
