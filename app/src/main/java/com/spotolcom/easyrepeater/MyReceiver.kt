@@ -13,7 +13,7 @@ class MyReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        Log.d("mytag", "16;onReceive: Onreciev")
+      //  Log.d("mytag", "16;onReceive: Onreciev")
 
         creatNotif(context,intent.getStringExtra("prase"))
         //startActivity(Intent(context, MyAppMainActivity::class.java))
@@ -23,7 +23,7 @@ class MyReceiver : BroadcastReceiver() {
 
         var builder = NotificationCompat.Builder(context, "CHANNEL_ID")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("textTitle")
+            //  .setContentTitle("textTitle")
             .setContentText(phrase)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 

@@ -43,9 +43,9 @@ class ForegroundService : Service() {
             }
             "ACTION_PHRASE" -> {
 
-                Log.d("mytag", "43;onStartCommand: ACTION_PHRASE")
-                val phr = intent?.getStringExtra("prase")
-                creatNotif(this, phr)
+             //   Log.d("mytag", "43;onStartCommand: ACTION_PHRASE")
+              //  val phr = intent?.getStringExtra("prase")
+              //  creatNotif(this, phr)
 
             }
 
@@ -135,6 +135,7 @@ class ForegroundService : Service() {
           val timeString = sharedPreferences.getString("time_repeat", "15")
 
           val countString = sharedPreferences.getString("countLoop", "55")
+          val oldDevBoolean = sharedPreferences.getBoolean("countLoop" ,false)
 
 
         val time2 = timeString?.toLong()//число минут между повторами
@@ -153,14 +154,14 @@ class ForegroundService : Service() {
 //            var phraseIntent = Intent("com.spotolcom.easyrepeater.ForeGroundService")
             var phraseIntent = Intent("com.spotolcom.easyrepeater.MyReceiver")
             phraseIntent.putExtra("prase", phrase)
-         //   phraseIntent.action = "ACTION_PHRASE"
+            phraseIntent.action = "ACTION_PHRASE"
             //startService(phraseIntent)
 
-            Intent().also { intent ->
-                intent.action = "com.spotolcom.easyrepeater.MyReceiver"
-                intent.putExtra("data", "Notice me senpai!")
-                sendBroadcast(intent)
-            }
+//            Intent().also { intent ->
+//                intent.action = "com.spotolcom.easyrepeater.MyReceiver"
+//                intent.putExtra("data", "Notice me senpai!")
+//                sendBroadcast(intent)
+//            }
                 //  phraseIntent.action = "ACTION_STOP"
             var pendingPhraseIntent = PendingIntent.getBroadcast(this, x, phraseIntent, 0)
             am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntent
@@ -203,7 +204,7 @@ class ForegroundService : Service() {
         if (countString != null) {
             for (i in 0 until countString.toInt()) {
 
-                var intent_prase_band1 = Intent(this, ForegroundService::class.java)
+                var intent_prase_band1 = Intent("com.spotolcom.easyrepeater.MyReceiver")
                 intent_prase_band1.action = "ACTION_PHRASE"
 
                 val pendingPhraseIntent = PendingIntent.getBroadcast(
