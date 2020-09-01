@@ -5,11 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="14dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -22,13 +23,14 @@
             android:id="@+id/id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:background="@android:color/holo_orange_light"
             android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -42,13 +44,14 @@
             android:id="@+id/word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:background="@android:color/holo_orange_light"
             android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -62,6 +65,7 @@
             android:id="@+id/translate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:background="@android:color/holo_orange_light"
             android:textAlignment="center" />
 
@@ -71,7 +75,7 @@
         android:id="@+id/edit_phrase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_edit"
-        android:contentDescription="@string/edit_phrase" />
+        android:contentDescription="@string/edit_phrase"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
 </LinearLayout>

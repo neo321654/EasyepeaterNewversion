@@ -148,7 +148,7 @@ class ForegroundService : Service() {
           }
 
         for (x in 0 until count!!) {
-            val phrase: String = list_data[x].word + " = " + list_data[x].translate
+            val phrase: String = list_data[x].word + "     =      " + list_data[x].translate
 
 //            var phraseIntent = Intent(this, ForegroundService::class.java)
 //            var phraseIntent = Intent("com.spotolcom.easyrepeater.ForeGroundService")
