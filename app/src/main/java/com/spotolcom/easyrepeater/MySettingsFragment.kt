@@ -39,6 +39,10 @@ class MySettingsFragment : PreferenceFragmentCompat() {
                 editText ->
             editText.inputType = InputType.TYPE_CLASS_NUMBER
         }
+        countRepeat?.setOnBindEditTextListener {
+                editText ->
+            editText.inputType = InputType.TYPE_CLASS_NUMBER
+        }
 
     }
 }

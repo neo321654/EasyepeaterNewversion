@@ -135,13 +135,13 @@ class ForegroundService : Service() {
           val timeString = sharedPreferences.getString("time_repeat", "15")
 
           val countString = sharedPreferences.getString("countLoop", "55")
-          val oldDevBoolean = sharedPreferences.getBoolean("countLoop" ,false)
+          val oldDevBoolean = sharedPreferences.getBoolean("oldBandMaintain" ,false)
 
 
         val time2 = timeString?.toLong()//число минут между повторами
         var count = countString?.toInt()//число повторов
         val time1: Long = 1000 * 60 * time2!!
-        var time = 1000 * 60.toLong()
+        var time = 1000 * 60L
 
           if (count != null) {
               if (count > list_data.size) count = list_data.size
@@ -154,7 +154,9 @@ class ForegroundService : Service() {
 //            var phraseIntent = Intent("com.spotolcom.easyrepeater.ForeGroundService")
             var phraseIntent = Intent("com.spotolcom.easyrepeater.MyReceiver")
             phraseIntent.putExtra("prase", phrase)
-            phraseIntent.action = "ACTION_PHRASE"
+
+            Log.d("mytag", "158;addAlarms: $phrase")
+           // phraseIntent.action = "ACTION_PHRASE"
             //startService(phraseIntent)
 
 //            Intent().also { intent ->
@@ -167,13 +169,13 @@ class ForegroundService : Service() {
             am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntent
 
                 //здесь сделать проверку в настройках поддерживать ли старый банд
-//            if(true){
-//
-//                var intent_prase_band: Intent = Intent("com.uthink.ring.ACTION_INCOMING_RINGING")
-//                intent_prase_band.putExtra("incoming_number",phrase)
-//                val pendingPhraseIntentOld = PendingIntent.getBroadcast(this, x+700, intent_prase_band, 0)
-//                am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntentOld
-//            }
+            if(oldDevBoolean){
+
+                var intent_prase_band: Intent = Intent("com.uthink.ring.ACTION_INCOMING_RINGING")
+                intent_prase_band.putExtra("incoming_number",phrase)
+                val pendingPhraseIntentOld = PendingIntent.getBroadcast(this, x+700, intent_prase_band, 0)
+                am[AlarmManager.RTC, System.currentTimeMillis() + time+7000] = pendingPhraseIntentOld
+            }
 
 
     //            var pIntent1: PendingIntent?
@@ -205,7 +207,7 @@ class ForegroundService : Service() {
             for (i in 0 until countString.toInt()) {
 
                 var intent_prase_band1 = Intent("com.spotolcom.easyrepeater.MyReceiver")
-                intent_prase_band1.action = "ACTION_PHRASE"
+              //  intent_prase_band1.action = "ACTION_PHRASE"
 
                 val pendingPhraseIntent = PendingIntent.getBroadcast(
                     this,

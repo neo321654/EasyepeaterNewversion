@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 //            }
 
 
-            //  creatNotif(this,"notif")
+              creatNotif(this,"notif")
             true
         }
         else -> {
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         var builder = NotificationCompat.Builder(context, "CHANNEL_ID")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("textTitle")
+           // .setContentTitle("textTitle")
             .setContentText(phrase)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
