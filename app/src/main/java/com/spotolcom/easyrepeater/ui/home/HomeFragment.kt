@@ -54,7 +54,7 @@ class HomeFragment() : Fragment() {
         val button_stop = root.findViewById<Button>(R.id.stop_btn)
         button_start.setOnClickListener{
 //            creatNotif(it.context)
-            ForegroundService.startService(root.context, "Foreground Service is running...")
+            ForegroundService.startService(root.context, getString(R.string.text_notif))
 
         }
         button_stop.setOnClickListener{

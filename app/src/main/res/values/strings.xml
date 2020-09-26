@@ -33,4 +33,6 @@
     <string name="time_repeat_code_not">Время не установлено</string>
     <string name="count_repeat_code_not">Количество не установлено</string>
     <string name="count_repeat_code">"Количество повторений равно: "</string>
+    <string name="text_notif">Это приложение понемногу делает тебя гением</string>
+    <string name="title_notif">Easy Repeater</string>
 </resources>

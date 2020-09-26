@@ -81,7 +81,7 @@ class ForegroundService : Service() {
 
 
                 val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle("Foreground Service Kotlin Example")
+                    .setContentTitle(getString(R.string.title_notif))
                     .setContentText(input)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentIntent(pendingIntent)
@@ -89,7 +89,7 @@ class ForegroundService : Service() {
                     .addAction(playAction1)
                     .build()
                 startForeground(1, notification)
-
+                startTraining()
             }
         }
         return START_NOT_STICKY
