@@ -2,14 +2,28 @@ package com.spotolcom.easyrepeater.ui.webview
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.spotolcom.easyrepeater.R
 import kotlinx.android.synthetic.main.webview_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
+import kotlinx.coroutines.Deferred
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
 
 
 class webview : Fragment() {
@@ -59,12 +73,87 @@ class webview : Fragment() {
             }
         }
 
-        webView.loadUrl("https://www.avito.ru/")
+      //  webView.loadUrl("https://www.avito.ru/")
 
+        val service = ApiFactory.placeholderApi
 
+        //Getting Posts from Jsonplaceholder API
+        GlobalScope.launch(Dispatchers.Main) {
+            val postRequest = service.getPhotos()
+            try {
+                Log.d("mytag", "84;onActivityCreated: try")
+                val response = postRequest.await()
+                if(response.isSuccessful){
+                    
+                    val posts = response.body()
+                    Log.d("mytag", "92;onActivityCreated: $posts")
+                }else{
+                    Log.d("mytag ","96"+response.errorBody().toString())
+                }
+
+            }catch (e: Exception){
+
+            }
+        }
+    }
+}
+
+object ApiFactory {
+    val placeholderApi : PlaceholderApi = RetrofitFactory.retrofit(AppConstants.JSON_PLACEHOLDER_BASE_URL)
+        .create(PlaceholderApi::class.java)
+}
+interface PlaceholderApi{
+    @GET("/add_word.php")
+    fun getPhotos() : Deferred<Response<List<PlaceholderPhotos>>>
+   // fun getPhotos() : String
+}
+data class PlaceholderPhotos(
+    val phrase: String,
+    val translate: String
+)
+object RetrofitFactory{
+    private val authInterceptor = Interceptor {chain->
+        val newUrl = chain.request().url()
+            .newBuilder()
+          //  .addQueryParameter("api_key", AppConstants.tmdbApiKey)
+            .build()
+
+        val newRequest = chain.request()
+            .newBuilder()
+            .url(newUrl)
+            .build()
+
+        chain.proceed(newRequest)
     }
 
+    private val loggingInterceptor =  HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
 
+    //Not logging the authkey if not debug
+    private val client =
+       // if(BuildConfig.DEBUG){
+        if(true){
+            OkHttpClient().newBuilder()
+                .addInterceptor(authInterceptor)
+                .addInterceptor(loggingInterceptor)
+                .build()
+        }else{
+            OkHttpClient().newBuilder()
+                .addInterceptor(loggingInterceptor)
+                .addInterceptor(authInterceptor)
+                .build()
+        }
 
+    fun retrofit(baseUrl : String) : Retrofit = Retrofit.Builder()
+        .client(client)
+        .baseUrl(baseUrl)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
 
+}
+object AppConstants{
+  //  const val JSON_PLACEHOLDER_BASE_URL = "https://jsonplaceholder.typicode.com"
+    const val JSON_PLACEHOLDER_BASE_URL = "http://srv34889.ht-test.ru"
 }
