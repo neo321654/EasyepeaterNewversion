@@ -22,7 +22,7 @@ android {
     }
     signingConfigs {
         my_key {
-            storeFile file('C:\\Users\\neo32\\android-studio\\jre\\jre\\bin\\my_first_key_12')
+            storeFile file('C:\\Users\\Neo321654\\my_first_key_12')
             storePassword 'danilka2010'
             keyAlias var
             keyPassword 'danilka2010'

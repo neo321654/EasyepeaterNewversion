@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.spotolcom.easyrepeater.Word
 import com.spotolcom.easyrepeater.WordRepository
 import com.spotolcom.easyrepeater.WordRoomDatabase
+import com.spotolcom.easyrepeater.data.Phrase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,12 +21,12 @@ class WebviewViewModel(application: Application) : AndroidViewModel(application)
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    val allWords: LiveData<List<Word>>
+    val allWords: LiveData<List<Phrase>>
 
     init {
         val wordsDao = WordRoomDatabase.getDatabase(application, viewModelScope).wordDao()
         repository = WordRepository(wordsDao)
-        allWords = repository.allWords
+        allWords = repository.allPhrases
     }
 
     /**

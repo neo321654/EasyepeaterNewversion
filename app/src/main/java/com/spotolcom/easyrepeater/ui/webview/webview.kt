@@ -1,12 +1,10 @@
 package com.spotolcom.easyrepeater.ui.webview
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,14 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.spotolcom.easyrepeater.R
-import com.spotolcom.easyrepeater.WordListAdapter
-import com.spotolcom.easyrepeater.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.webview_fragment.*
+import com.spotolcom.easyrepeater.data.WordListAdapterPhrase
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
-import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,16 +41,22 @@ class webview : Fragment() {
         val root :View = inflater.inflate(R.layout.webview_fragment, container, false)
 
         val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = WordListAdapter(root.context)
+        val adapter = WordListAdapterPhrase(root.context)
+
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(root.context)
+
+        val layoutManager = LinearLayoutManager(root.context)
+        //layoutManager.stackFromEnd = true
+        layoutManager.reverseLayout = true
+        recyclerView.layoutManager = layoutManager
 
         webViewModel.allWords.observe(viewLifecycleOwner, Observer { words ->
             // Update the cached copy of the words in the adapter.
+
             words?.let { adapter.setWords(it) }
         })
 
-        return view
+        return root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
