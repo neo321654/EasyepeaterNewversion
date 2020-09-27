@@ -8,9 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.spotolcom.easyrepeater.R
+import com.spotolcom.easyrepeater.WordListAdapter
+import com.spotolcom.easyrepeater.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.webview_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,10 +32,7 @@ import retrofit2.http.GET
 
 
 class webview : Fragment() {
-    lateinit var webView: WebView
-    companion object {
-        fun newInstance() = webview()
-    }
+    private lateinit var webViewModel: WebviewViewModel
 
     private lateinit var viewModel: WebviewViewModel
 
@@ -39,10 +41,19 @@ class webview : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-       val view :View = inflater.inflate(R.layout.webview_fragment, container, false)
-      //  web_view.setloadUrl("https://www.avito.ru/")
+        webViewModel =ViewModelProvider(this).get(WebviewViewModel::class.java)
 
-        webView = view.findViewById(R.id.web_view)
+        val root :View = inflater.inflate(R.layout.webview_fragment, container, false)
+
+        val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerview)
+        val adapter = WordListAdapter(root.context)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(root.context)
+
+        webViewModel.allWords.observe(viewLifecycleOwner, Observer { words ->
+            // Update the cached copy of the words in the adapter.
+            words?.let { adapter.setWords(it) }
+        })
 
         return view
     }
@@ -64,14 +75,14 @@ class webview : Fragment() {
 //
     //    WebAction(webview)
 
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                if (url != null) {
-                    view?.loadUrl(url)
-                }
-                return true
-            }
-        }
+//        webView.webViewClient = object : WebViewClient() {
+//            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+//                if (url != null) {
+//                    view?.loadUrl(url)
+//                }
+//                return true
+//            }
+//        }
 
       //  webView.loadUrl("https://www.avito.ru/")
 
@@ -84,7 +95,7 @@ class webview : Fragment() {
                 Log.d("mytag", "84;onActivityCreated: try")
                 val response = postRequest.await()
                 if(response.isSuccessful){
-                    
+
                     val posts = response.body()
                     Log.d("mytag", "92;onActivityCreated: $posts")
                 }else{

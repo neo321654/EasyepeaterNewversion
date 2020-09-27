@@ -35,4 +35,5 @@
     <string name="count_repeat_code">"Количество повторений равно: "</string>
     <string name="text_notif">Это приложение понемногу делает тебя гением</string>
     <string name="title_notif">Easy Repeater</string>
+    <string name="sync">синхронизировать</string>
 </resources>

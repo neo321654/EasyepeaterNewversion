@@ -48,6 +48,7 @@ class HomeFragment() : Fragment() {
             // Update the cached copy of the words in the adapter.
             words?.let { adapter.setWords(it) }
         })
+
         val fab = root.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.nav_gallery, null))
         val button_start = root.findViewById<Button>(R.id.start_btn)
