@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,7 +51,7 @@ class webview : Fragment() {
         layoutManager.reverseLayout = true
         recyclerView.layoutManager = layoutManager
 
-        webViewModel.allWords.observe(viewLifecycleOwner, Observer { words ->
+        webViewModel.allWords?.observe(viewLifecycleOwner, Observer { words ->
             // Update the cached copy of the words in the adapter.
 
             words?.let { adapter.setWords(it) }
@@ -98,6 +99,16 @@ class webview : Fragment() {
                 if(response.isSuccessful){
 
                     val posts = response.body()
+                    if (posts != null) {
+                        Log.d("mytag", "101;onActivityCreated: ${posts.size} ${posts.get(1)} ")
+
+//                        posts.forEach {
+//                            println("The element is ${it.phrase} ${it.translate}")
+//                        }
+                         val _allPhrasesServer = MutableLiveData<List<PhraseFromServer>>().apply {
+                            value =   posts }
+
+                    }
                     Log.d("mytag", "92;onActivityCreated: $posts")
                 }else{
                     Log.d("mytag ","96"+response.errorBody().toString())
@@ -116,10 +127,10 @@ object ApiFactory {
 }
 interface PlaceholderApi{
     @GET("/add_word.php")
-    fun getPhotos() : Deferred<Response<List<PlaceholderPhotos>>>
+    fun getPhotos() : Deferred<Response<List<PhraseFromServer>>>
    // fun getPhotos() : String
 }
-data class PlaceholderPhotos(
+data class PhraseFromServer(
     val phrase: String,
     val translate: String
 )

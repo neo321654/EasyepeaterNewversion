@@ -42,3 +42,4 @@ class WordRepository(private val wordDao: WordDao) {
         wordDao.update(id,word,traslate)
     }
 }
+
