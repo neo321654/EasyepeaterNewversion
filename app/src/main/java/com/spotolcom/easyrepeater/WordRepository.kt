@@ -3,7 +3,6 @@ package com.spotolcom.easyrepeater
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.spotolcom.easyrepeater.data.Phrase
 
 class WordRepository(private val wordDao: WordDao) {
 
@@ -12,11 +11,11 @@ class WordRepository(private val wordDao: WordDao) {
     //val allWords: LiveData<List<Word>> = wordDao.getAlphabetizedWords()
     val allWords: LiveData<List<Word>> = wordDao.getAlphabetizedWords()
 
-    private val _allPhrases = MutableLiveData<List<Phrase>>().apply {
-      value =   listOf(Phrase("tkdfkj","transl"),
-            Phrase("tkdfkw2j","tranrr4sl"),Phrase("tkd3fkj","tran22sl"))
-    }
-    val allPhrases: LiveData<List<Phrase>> = _allPhrases
+//    private val _allPhrases = MutableLiveData<List<Phrase>>().apply {
+//      value =   listOf(Phrase("tkdfkj","transl"),
+//            Phrase("tkdfkw2j","tranrr4sl"),Phrase("tkd3fkj","tran22sl"))
+//    }
+//    val allPhrases: LiveData<List<Phrase>> = _allPhrases
 
 
 //    val allPhrases: LiveData<List<Phrase>> = LiveData(listOf(Phrase("tkdfkj","transl"),
