@@ -19,38 +19,23 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
-//class HomeViewModel(application: Application) : AndroidViewModel(application) {
 class WebviewViewModel(application: Application) : AndroidViewModel(application) {
-//    private val _text = MutableLiveData<String>().apply {
-//        value = "This is home Fragment"
-//    }
-//    val text: LiveData<String> = _text
 
-    private val repository: WordRepository
-    // Using LiveData and caching what getAlphabetizedWords returns has several benefits:
-    // - We can put an observer on the data (instead of polling for changes) and only update the
-    //   the UI when the data actually changes.
-    // - Repository is completely separated from the UI through the ViewModel.
      var allWords: LiveData<List<PhraseFromServer>>
 
     init {
-        val wordsDao = WordRoomDatabase.getDatabase(application, viewModelScope).wordDao()
-        repository = WordRepository(wordsDao)
-
 
          val _allPhrases = MutableLiveData<List<PhraseFromServer>>().apply {
             value =   listOf(PhraseFromServer("tkdfkj","transl"),
                 PhraseFromServer("tkdfkw2j","tranrr4sl"),PhraseFromServer("tkd3fkj","tran22sl"))
         }
         allWords = _allPhrases
-        Log.d("mytag", "46;: $allWords")
 
-     //  allWords.postValue(go_to_server())
     }
 
      fun go_to_server(): MutableLiveData<List<PhraseFromServer>>? {
         val service = ApiFactory.placeholderApi
-        //Getting Posts from Jsonplaceholder API
+
         var _allPhrasesServer : MutableLiveData<List<PhraseFromServer>>? = null
 
         GlobalScope.launch(Dispatchers.Main) {
@@ -67,7 +52,8 @@ class WebviewViewModel(application: Application) : AndroidViewModel(application)
                          _allPhrasesServer = MutableLiveData<List<PhraseFromServer>>().apply {
                             value = posts
                         }
-                       // allWords.setvalue(_allPhrasesServer)
+
+                      //  allWords = _allPhrasesServer!!
                     }
                     Log.d("mytag", "92;onActivityCreated: $allWords")
                 } else {
@@ -76,22 +62,9 @@ class WebviewViewModel(application: Application) : AndroidViewModel(application)
             } catch (e: Exception) {
             }
         }
-
          return _allPhrasesServer
     }
 
-    /**
-     * Launching a new coroutine to insert the data in a non-blocking way
-     */
-    fun insert(word: Word) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insert(word)
-    }
-    fun getRandWords() = viewModelScope.launch(Dispatchers.IO) {
-        repository.getRandWords()
-    }
-    fun upDate(id:String,word:String,traslate:String) = viewModelScope.launch(Dispatchers.IO) {
-        repository.upDate(id,word,traslate)
-    }
 
 
     object ApiFactory {
