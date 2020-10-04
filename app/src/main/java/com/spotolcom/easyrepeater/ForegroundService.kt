@@ -106,7 +106,6 @@ class ForegroundService : Service() {
             wordsToAlarm?.let { addAlarms(it) }
 
         }
-        Log.d("mytag", "111;startTraining: end")
     }
 
       private suspend fun getListFromBase(): List<Word> {

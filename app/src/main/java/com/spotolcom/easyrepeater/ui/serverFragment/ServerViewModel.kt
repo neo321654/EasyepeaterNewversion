@@ -1,9 +1,15 @@
 package com.spotolcom.easyrepeater.ui.serverFragment
 
 import android.app.Application
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.*
+import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.spotolcom.easyrepeater.data.Word
+import com.spotolcom.easyrepeater.data.WordRoomDatabase
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -18,18 +24,11 @@ class ServerViewModel(application: Application) : AndroidViewModel(application) 
      val allWords: MutableLiveData<List<PhraseFromServer>> by lazy {
          MutableLiveData<List<PhraseFromServer>> ()
      }
-    val currentName: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
 
     init {
-
          val _allPhrases =  listOf(PhraseFromServer("tkdfkj","transl"),
                 PhraseFromServer("tkdfkw2j","tranrr4sl"),PhraseFromServer("tkd3fkj","tran22sl"))
-
         allWords.value = _allPhrases
-        currentName.value = "000"
-
     }
 
      fun go_to_server(){
@@ -105,4 +104,56 @@ class ServerViewModel(application: Application) : AndroidViewModel(application) 
 
     }
 
-}
+    fun insertIfNotPhrase(Ctx: Context) {
+        Log.d("mytag", "107;insertIfNotPhrase: click insert")
+        viewModelScope.launch (Dispatchers.IO) {
+            val db = Room.databaseBuilder(
+                Ctx,
+                WordRoomDatabase::class.java, "word_database"
+            ).build()
+
+            var words: List<Word> = db.wordDao().getRandWords()
+            var listWords : List<PhraseFromServer>? = allWords.value
+
+
+            var wordsServer = listWords?.map {    Word(word = it.phrase,translate = it.translate)}
+            var wordsBase = words.map {  Word(word = it.word,translate = it.translate)}
+         //   var minusWords =wordsServer.minusAssign(wordsBase)
+            Log.d("mytag", "120;wordsServer: $wordsServer")
+            Log.d("mytag", "120;wordsBase: $wordsBase")
+
+//            for (word in words) {
+//                //Log.d("mytag", "115;insertIfNotPhrase: ${word.word} ${word.translate}")
+//
+//                listWords?.let{
+//                    val size = it.size
+//
+//                    for (i in 0 until size) {
+//
+//                        if(listWords[i].phrase != word.word){
+//
+//                                db.wordDao().insert(
+//                                    Word(
+//                                        word = listWords[i].phrase,
+//                                        translate = listWords[i].translate
+//                                    )
+//                                )
+//            Log.d("mytag", "123;insertIfNotPhrase: ${listWords[i].phrase} ==${word.word} ")
+//                             }
+//
+//                        }
+//                    }
+//                }
+
+
+
+
+
+
+                }
+            }
+        }
+
+
+
+

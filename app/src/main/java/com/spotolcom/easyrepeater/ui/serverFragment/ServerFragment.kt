@@ -9,8 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.spotolcom.easyrepeater.R
+import com.spotolcom.easyrepeater.data.Word
 import com.spotolcom.easyrepeater.data.WordListAdapterPhrase
+import com.spotolcom.easyrepeater.data.WordRoomDatabase
 import kotlinx.android.synthetic.main.webview_fragment.*
 
 
@@ -44,14 +47,14 @@ class ServerFragment : Fragment() {
         viewModel.allWords.observe(viewLifecycleOwner, Observer { words ->
             words?.let { adapter.setWords(it) }
         })
-        viewModel.currentName.observe(viewLifecycleOwner, Observer { wordss ->
-            text_home.text=wordss
-        })
-        download_to_base.setOnClickListener{
 
+        download_to_base.setOnClickListener{
+            viewModel.insertIfNotPhrase(cont)
         }
         sync.setOnClickListener{
             viewModel.go_to_server()
         }
     }
+
+
 }
