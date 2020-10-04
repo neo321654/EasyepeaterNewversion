@@ -1,4 +1,4 @@
-package com.spotolcom.easyrepeater.ui.slideshow
+package com.spotolcom.easyrepeater.ui.updateFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import com.spotolcom.easyrepeater.R
 import com.spotolcom.easyrepeater.ui.home.HomeViewModel
 
-class SlideshowFragment : Fragment() {
+class UpdateFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(

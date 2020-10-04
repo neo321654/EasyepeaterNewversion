@@ -37,4 +37,7 @@
     <string name="title_notif">Easy Repeater</string>
     <string name="sync">Загрузить</string>
     <string name="download_to_base">Сохранить</string>
+    <string name="startsAlarms">Запустили алармы</string>
+    <string name="stopAlarms">Останавилваем алармы</string>
+    <string name="ForegroundServiceChannel">Foreground Service Channel</string>
 </resources>

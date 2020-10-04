@@ -35,8 +35,6 @@ class MyReceiver : BroadcastReceiver() {
                     wordsToAlarm  = getListFromBase(context) //(3)
                 }
                 job.join() //(4)
-                Log.d("mytag", "104;startTraining: $wordsToAlarm")
-               // wordsToAlarm?.let { addAlarms(it) }
 
                  phrase1 = wordsToAlarm!![0].word + "     =      " + wordsToAlarm!![0].translate
             }
@@ -62,7 +60,6 @@ class MyReceiver : BroadcastReceiver() {
         ).build()
 
         var words: List<Word> = db.wordDao().getRandWords()
-//         Log.d("mytag", "94;startTraining: $words")
         return words
     }
 }

@@ -11,7 +11,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.spotolcom.easyrepeater.R
-import com.spotolcom.easyrepeater.ui.webview.WebviewViewModel
+import com.spotolcom.easyrepeater.ui.serverFragment.ServerViewModel
 
 
 class WordListAdapterPhrase internal constructor(
@@ -19,7 +19,7 @@ class WordListAdapterPhrase internal constructor(
 ) : RecyclerView.Adapter<WordListAdapterPhrase.WordViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var words = emptyList<WebviewViewModel.PhraseFromServer>() // Cached copy of words
+    private var words = emptyList<ServerViewModel.PhraseFromServer>() // Cached copy of words
 
     inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val word: TextView = itemView.findViewById(R.id.word)
@@ -52,7 +52,7 @@ class WordListAdapterPhrase internal constructor(
 
     }
 
-    internal fun setWords(words: List<WebviewViewModel.PhraseFromServer>) {
+    internal fun setWords(words: List<ServerViewModel.PhraseFromServer>) {
         this.words = words
         Log.d("mytag", "57;setWords: notifi")
         notifyDataSetChanged()

@@ -44,10 +44,6 @@ class ForegroundService : Service() {
             }
             "ACTION_PHRASE" -> {
 
-             //   Log.d("mytag", "43;onStartCommand: ACTION_PHRASE")
-              //  val phr = intent?.getStringExtra("prase")
-              //  creatNotif(this, phr)
-
             }
 
             else -> {
@@ -97,7 +93,7 @@ class ForegroundService : Service() {
     }
 
     private fun startTraining() {
-        Log.d("mytag", "95;startTraining: nachalo")
+
         runBlocking {
              var wordsToAlarm: List<Word>? =null
             val job = launch(this.coroutineContext) { //(2)
@@ -106,7 +102,7 @@ class ForegroundService : Service() {
             }
             job.join() //(4)
 
-            Log.d("mytag", "104;startTraining: $wordsToAlarm")
+
             wordsToAlarm?.let { addAlarms(it) }
 
         }
@@ -120,16 +116,11 @@ class ForegroundService : Service() {
          ).build()
 
          var words: List<Word> = db.wordDao().getRandWords()
-//         Log.d("mytag", "94;startTraining: $words")
          return words
      }
       fun addAlarms(list_data: List<Word>) {
-//        val list_data = mutableListOf("one", "two", "three", "four")
-          Log.d("mytag", "126;addAlarms: vnytri $list_data ")
 
         val am: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-      //Здесь надо брать минуты из шаред преференсес
 
     //    val time2 = 1L//число минут между повторами
           val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */)
@@ -151,48 +142,23 @@ class ForegroundService : Service() {
         for (x in 0 until count!!) {
             val phrase: String = list_data[x].word + "     =      " + list_data[x].translate
 
-//            var phraseIntent = Intent(this, ForegroundService::class.java)
-//            var phraseIntent = Intent("com.spotolcom.easyrepeater.ForeGroundService")
             var phraseIntent = Intent("com.spotolcom.easyrepeater.MyReceiver")
             phraseIntent.putExtra("prase", phrase)
 
-            Log.d("mytag", "158;addAlarms: $phrase")
-           // phraseIntent.action = "ACTION_PHRASE"
-            //startService(phraseIntent)
 
-//            Intent().also { intent ->
-//                intent.action = "com.spotolcom.easyrepeater.MyReceiver"
-//                intent.putExtra("data", "Notice me senpai!")
-//                sendBroadcast(intent)
-//            }
-                //  phraseIntent.action = "ACTION_STOP"
             var pendingPhraseIntent = PendingIntent.getBroadcast(this, x, phraseIntent, 0)
             am[AlarmManager.RTC, System.currentTimeMillis() + time] = pendingPhraseIntent
 
                 //здесь сделать проверку в настройках поддерживать ли старый банд
             if(oldDevBoolean){
-
                 var intent_prase_band: Intent = Intent("com.uthink.ring.ACTION_INCOMING_RINGING")
                 intent_prase_band.putExtra("incoming_number",phrase)
                 val pendingPhraseIntentOld = PendingIntent.getBroadcast(this, x+700, intent_prase_band, 0)
                 am[AlarmManager.RTC, System.currentTimeMillis() + time+7000] = pendingPhraseIntentOld
             }
-
-
-    //            var pIntent1: PendingIntent?
-    //
-    //            pIntent1 = PendingIntent.getBroadcast(this, x, pendingPhraseIntent, 0)
-
-
-
-
-    //                        if(x == count){
-    //                            Toast.makeText(this, "count = x", Toast.LENGTH_SHORT).show();
-    //                            stopForegroundService();
-    //                        }
             time += time1
         }
-          Toast.makeText(this, "Запустили алармы", Toast.LENGTH_LONG).show()
+          Toast.makeText(this, getString(R.string.startsAlarms), Toast.LENGTH_LONG).show()
     }
 
     private fun stopTraining() {
@@ -208,7 +174,6 @@ class ForegroundService : Service() {
             for (i in 0 until countString.toInt()) {
 
                 var intent_prase_band1 = Intent("com.spotolcom.easyrepeater.MyReceiver")
-              //  intent_prase_band1.action = "ACTION_PHRASE"
 
                 val pendingPhraseIntent = PendingIntent.getBroadcast(
                     this,
@@ -216,16 +181,13 @@ class ForegroundService : Service() {
                     intent_prase_band1,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
-                Log.d("mytag", "164;stopTraining: итерация ")
                 if (pendingPhraseIntent != null) {
                     am1.cancel(pendingPhraseIntent)
-                    // pendingPhraseIntent.cancel()
-                    Log.d("mytag", "168;stopTraining: отменил один")
                 }
             }
         }
         stopSelf();
-        Toast.makeText(this, "Останавилваем алармы", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.stopAlarms), Toast.LENGTH_LONG).show()
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -234,24 +196,11 @@ class ForegroundService : Service() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                CHANNEL_ID, "Foreground Service Channel",
+                CHANNEL_ID, getString(R.string.ForegroundServiceChannel),
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val manager = getSystemService(NotificationManager::class.java)
             manager!!.createNotificationChannel(serviceChannel)
         }
     }
-     private fun creatNotif(context: Context, phrase: String?){
-
-        var builder = NotificationCompat.Builder(context, "CHANNEL_ID")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("textTitle")
-            .setContentText(phrase)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        with(NotificationManagerCompat.from(context)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(111, builder.build())
-        }}
-
 }

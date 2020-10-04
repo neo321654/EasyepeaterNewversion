@@ -1,10 +1,10 @@
-package com.spotolcom.easyrepeater.ui.gallery
+package com.spotolcom.easyrepeater.ui.insertFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class InsertViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is gallery Fragment"

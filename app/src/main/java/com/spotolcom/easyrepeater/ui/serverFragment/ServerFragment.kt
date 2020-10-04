@@ -1,26 +1,23 @@
-package com.spotolcom.easyrepeater.ui.webview
+package com.spotolcom.easyrepeater.ui.serverFragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.spotolcom.easyrepeater.R
 import com.spotolcom.easyrepeater.data.WordListAdapterPhrase
 import kotlinx.android.synthetic.main.webview_fragment.*
 
 
-class webview : Fragment() {
+class ServerFragment : Fragment() {
 
     private lateinit var adapter: WordListAdapterPhrase
-    private lateinit var viewModel: WebviewViewModel
+    private lateinit var viewModel: ServerViewModel
     lateinit var cont : Context
 
     override fun onCreateView(
@@ -35,7 +32,7 @@ class webview : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(WebviewViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ServerViewModel::class.java)
 
         adapter = WordListAdapterPhrase(cont)
         recyclerview.adapter = adapter

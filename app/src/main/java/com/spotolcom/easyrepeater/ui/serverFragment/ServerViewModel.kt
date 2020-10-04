@@ -1,4 +1,4 @@
-package com.spotolcom.easyrepeater.ui.webview
+package com.spotolcom.easyrepeater.ui.serverFragment
 
 import android.app.Application
 import androidx.lifecycle.*
@@ -13,7 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
-class WebviewViewModel(application: Application) : AndroidViewModel(application) {
+class ServerViewModel(application: Application) : AndroidViewModel(application) {
 
      val allWords: MutableLiveData<List<PhraseFromServer>> by lazy {
          MutableLiveData<List<PhraseFromServer>> ()

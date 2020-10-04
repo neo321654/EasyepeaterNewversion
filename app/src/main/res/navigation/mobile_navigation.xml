@@ -13,18 +13,18 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.spotolcom.easyrepeater.ui.gallery.GalleryFragment"
+        android:name="com.spotolcom.easyrepeater.ui.insertFragment.InsertFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.spotolcom.easyrepeater.ui.slideshow.SlideshowFragment"
+        android:name="com.spotolcom.easyrepeater.ui.updateFragment.UpdateFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/webview"
-        android:name="com.spotolcom.easyrepeater.ui.webview.webview"
+        android:name="com.spotolcom.easyrepeater.ui.serverFragment.ServerFragment"
         android:label="webview_fragment"
         tools:layout="@layout/webview_fragment" />
     <fragment
