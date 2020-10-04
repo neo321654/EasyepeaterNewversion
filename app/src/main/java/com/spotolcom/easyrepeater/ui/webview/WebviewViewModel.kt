@@ -21,22 +21,28 @@ import retrofit2.http.GET
 
 class WebviewViewModel(application: Application) : AndroidViewModel(application) {
 
-     var allWords: LiveData<List<PhraseFromServer>>
+     val allWords: MutableLiveData<List<PhraseFromServer>> by lazy {
+         MutableLiveData<List<PhraseFromServer>> ()
+     }
+
+    val currentName: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
     init {
 
-         val _allPhrases = MutableLiveData<List<PhraseFromServer>>().apply {
-            value =   listOf(PhraseFromServer("tkdfkj","transl"),
+         val _allPhrases =  listOf(PhraseFromServer("tkdfkj","transl"),
                 PhraseFromServer("tkdfkw2j","tranrr4sl"),PhraseFromServer("tkd3fkj","tran22sl"))
-        }
-        allWords = _allPhrases
+
+        allWords.value = _allPhrases
+        currentName.value = "000"
 
     }
 
-     fun go_to_server(): MutableLiveData<List<PhraseFromServer>>? {
+     fun go_to_server(){
         val service = ApiFactory.placeholderApi
 
-        var _allPhrasesServer : MutableLiveData<List<PhraseFromServer>>? = null
+
 
         GlobalScope.launch(Dispatchers.Main) {
             val postRequest = service.getPhotos()
@@ -49,11 +55,7 @@ class WebviewViewModel(application: Application) : AndroidViewModel(application)
     //                        posts.forEach {
     //                            println("The element is ${it.phrase} ${it.translate}")
     //                        }
-                         _allPhrasesServer = MutableLiveData<List<PhraseFromServer>>().apply {
-                            value = posts
-                        }
-
-                      //  allWords = _allPhrasesServer!!
+                        allWords.value =posts
                     }
                     Log.d("mytag", "92;onActivityCreated: $allWords")
                 } else {
@@ -62,10 +64,7 @@ class WebviewViewModel(application: Application) : AndroidViewModel(application)
             } catch (e: Exception) {
             }
         }
-         return _allPhrasesServer
     }
-
-
 
     object ApiFactory {
         val placeholderApi : PlaceholderApi = RetrofitFactory.retrofit(AppConstants.JSON_PLACEHOLDER_BASE_URL)
