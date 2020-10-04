@@ -6,8 +6,9 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.room.Room
+import com.spotolcom.easyrepeater.data.Word
+import com.spotolcom.easyrepeater.data.WordRoomDatabase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 

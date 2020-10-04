@@ -1,15 +1,9 @@
 package com.spotolcom.easyrepeater.ui.webview
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.spotolcom.easyrepeater.Word
-import com.spotolcom.easyrepeater.WordRepository
-import com.spotolcom.easyrepeater.WordRoomDatabase
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -24,7 +18,6 @@ class WebviewViewModel(application: Application) : AndroidViewModel(application)
      val allWords: MutableLiveData<List<PhraseFromServer>> by lazy {
          MutableLiveData<List<PhraseFromServer>> ()
      }
-
     val currentName: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
@@ -42,38 +35,28 @@ class WebviewViewModel(application: Application) : AndroidViewModel(application)
      fun go_to_server(){
         val service = ApiFactory.placeholderApi
 
-
-
-        GlobalScope.launch(Dispatchers.Main) {
-            val postRequest = service.getPhotos()
-            try {
-                val response = postRequest.await()
-                if (response.isSuccessful) {
-                    val posts = response.body()
-                    if (posts != null) {
-                        Log.d("mytag", "101;onActivityCreated: ${posts.size} ${posts.get(1)} ")
-    //                        posts.forEach {
-    //                            println("The element is ${it.phrase} ${it.translate}")
-    //                        }
-                        allWords.value =posts
-                    }
-                    Log.d("mytag", "92;onActivityCreated: $allWords")
-                } else {
-                    Log.d("mytag ", "96" + response.errorBody().toString())
-                }
-            } catch (e: Exception) {
-            }
-        }
-    }
+         viewModelScope.launch {
+             val postRequest = service.getPhrases()
+             try {
+                 val response = postRequest.await()
+                 if (response.isSuccessful) {
+                     val posts = response.body()
+                     if (posts != null) {
+                         allWords.value =posts
+                     }
+                 }
+             } catch (e: Exception) {
+             }
+         }
+     }
 
     object ApiFactory {
-        val placeholderApi : PlaceholderApi = RetrofitFactory.retrofit(AppConstants.JSON_PLACEHOLDER_BASE_URL)
+        val placeholderApi : PlaceholderApi = RetrofitFactory.retrofit("http://srv34889.ht-test.ru")
             .create(PlaceholderApi::class.java)
     }
     interface PlaceholderApi{
         @GET("/add_word.php")
-        fun getPhotos() : Deferred<Response<List<PhraseFromServer>>>
-        // fun getPhotos() : String
+        fun getPhrases() : Deferred<Response<List<PhraseFromServer>>>
     }
     data class PhraseFromServer(
         val phrase: String,
@@ -120,10 +103,6 @@ class WebviewViewModel(application: Application) : AndroidViewModel(application)
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
-    }
-    object AppConstants{
-        //  const val JSON_PLACEHOLDER_BASE_URL = "https://jsonplaceholder.typicode.com"
-        const val JSON_PLACEHOLDER_BASE_URL = "http://srv34889.ht-test.ru"
     }
 
 }

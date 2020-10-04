@@ -1,4 +1,4 @@
-package com.spotolcom.easyrepeater
+package com.spotolcom.easyrepeater.data
 
 
 import androidx.room.ColumnInfo

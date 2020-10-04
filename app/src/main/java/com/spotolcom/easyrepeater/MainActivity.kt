@@ -31,11 +31,6 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-//        val fab: FloatingActionButton = findViewById(R.id.fab)
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -60,21 +55,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
         R.id.testNotif -> {
-
-//            var phraseIntent = Intent("com.spotolcom.easyrepeater.MyReceiver")
-//            phraseIntent.putExtra("prase", "phrase")
-//            phraseIntent.action = "ACTION_PHRASE"
-//
-//            sendBroadcast(phraseIntent)
-//            Log.d("mytag", "68;onOptionsItemSelected: ")
-//            Intent().also { intent ->
-//                intent.action = "com.spotolcom.easyrepeater.MyReceiver"
-//                intent.putExtra("data", "Notice me senpai!")
-//                sendBroadcast(intent)
-//            }
-
-
-              creatNotif(this,"notif")
+            creatNotif(this,"notif")
             true
         }
         else -> {

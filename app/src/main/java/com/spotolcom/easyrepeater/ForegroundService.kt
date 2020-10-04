@@ -10,9 +10,10 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceManager
 import androidx.room.Room
+import com.spotolcom.easyrepeater.data.Word
+import com.spotolcom.easyrepeater.data.WordRoomDatabase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 

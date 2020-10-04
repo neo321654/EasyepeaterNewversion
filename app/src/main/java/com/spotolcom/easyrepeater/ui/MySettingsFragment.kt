@@ -1,13 +1,12 @@
-package com.spotolcom.easyrepeater
+package com.spotolcom.easyrepeater.ui
 
 import android.os.Bundle
 import android.text.InputType
 import android.text.TextUtils
-import android.widget.EditText
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
+import com.spotolcom.easyrepeater.R
 
 
 class MySettingsFragment : PreferenceFragmentCompat() {

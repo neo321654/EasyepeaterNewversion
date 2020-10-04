@@ -29,6 +29,6 @@
         tools:layout="@layout/webview_fragment" />
     <fragment
         android:id="@+id/mySettingsFragment"
-        android:name="com.spotolcom.easyrepeater.MySettingsFragment"
+        android:name="com.spotolcom.easyrepeater.ui.MySettingsFragment"
         android:label="MySettingsFragment" />
 </navigation>

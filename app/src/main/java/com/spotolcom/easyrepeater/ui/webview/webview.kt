@@ -50,8 +50,8 @@ class webview : Fragment() {
         viewModel.currentName.observe(viewLifecycleOwner, Observer { wordss ->
             text_home.text=wordss
         })
-        stop_btn.setOnClickListener{
-            viewModel.currentName.value = "nnn"
+        download_to_base.setOnClickListener{
+
         }
         sync.setOnClickListener{
             viewModel.go_to_server()

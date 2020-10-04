@@ -19,12 +19,12 @@
         app:layout_constraintTop_toBottomOf="@+id/stop_btn" />
 
     <Button
-        android:id="@+id/stop_btn"
+        android:id="@+id/download_to_base"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/stop"
+        android:text="@string/download_to_base"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/start_btn"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:padding="@dimen/big_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

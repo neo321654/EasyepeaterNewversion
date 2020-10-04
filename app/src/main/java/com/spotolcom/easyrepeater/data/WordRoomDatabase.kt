@@ -1,4 +1,4 @@
-package com.spotolcom.easyrepeater
+package com.spotolcom.easyrepeater.data
 
 import android.content.Context
 import androidx.room.Database
