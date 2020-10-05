@@ -1,4 +1,4 @@
-package com.spotolcom.easyrepeater.ui.serverFragment
+ package com.spotolcom.easyrepeater.ui.serverFragment
 
 import android.app.Application
 import android.content.Context
@@ -54,7 +54,7 @@ class ServerViewModel(application: Application) : AndroidViewModel(application) 
             .create(PlaceholderApi::class.java)
     }
     interface PlaceholderApi{
-        @GET("/add_word.php")
+        @GET("/add_word.php?login_neo=adminneo")
         fun getPhrases() : Deferred<Response<List<PhraseFromServer>>>
     }
     data class PhraseFromServer(
@@ -112,15 +112,24 @@ class ServerViewModel(application: Application) : AndroidViewModel(application) 
                 WordRoomDatabase::class.java, "word_database"
             ).build()
 
-            var words: List<Word> = db.wordDao().getRandWords()
-            var listWords : List<PhraseFromServer>? = allWords.value
+            val words: List<Word> = db.wordDao().getRandWords()
+            val listWords : List<PhraseFromServer>? = allWords.value
 
 
-            var wordsServer = listWords?.map {    Word(word = it.phrase,translate = it.translate)}
-            var wordsBase = words.map {  Word(word = it.word,translate = it.translate)}
+            val wordsServer = listWords?.map {    Word(word = it.phrase,translate = it.translate)}
+            val wordsBase = words.map { it.word}
          //   var minusWords =wordsServer.minusAssign(wordsBase)
             Log.d("mytag", "120;wordsServer: $wordsServer")
             Log.d("mytag", "120;wordsBase: $wordsBase")
+            if (wordsServer != null) {
+                for (word in wordsServer) {
+                    if(!wordsBase.contains(word.word)){
+                        Log.d("mytag", "127;insertIfNotPhrase: !contains ${word.word} ")
+                        db.wordDao().insert(word)
+                    }
+                }
+            }
+
 
 //            for (word in words) {
 //                //Log.d("mytag", "115;insertIfNotPhrase: ${word.word} ${word.translate}")
